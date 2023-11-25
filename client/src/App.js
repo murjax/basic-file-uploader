@@ -39,7 +39,7 @@ function App() {
         <button type="submit">Upload</button>
       </form>
       <br/>
-      <div>
+      <div data-test="upload-result">
         <span>Upload Result: {uploadResult}</span>
       </div>
     </div>
