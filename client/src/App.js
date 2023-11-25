@@ -1,8 +1,10 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 function App() {
-  const [file, setFile] = useState()
+  const [file, setFile] = useState();
+  const [uploadResult, setUploadResult] = useState();
+  const fileInput = useRef(null);
 
   function handleChange(event) {
     setFile(event.target.files[0]);
@@ -14,12 +16,14 @@ function App() {
     const url = 'http://localhost:3001/upload';
     const formData = new FormData();
     formData.append('file', file);
+
     fetch(url, {
       method: 'POST',
       mode: 'cors',
       body: formData
-    }).then((response) => {
-      console.log(response);
+    }).then((response) => response.json()).then((json) => {
+      fileInput.current.value = null;
+      setUploadResult(json.message);
     });
   }
 
@@ -30,10 +34,14 @@ function App() {
         <input
           type="file"
           onChange={handleChange}
-          data-test="file-input"
+          ref={fileInput}
         />
         <button type="submit">Upload</button>
       </form>
+      <br/>
+      <div>
+        <span>Upload Result: {uploadResult}</span>
+      </div>
     </div>
   );
 }

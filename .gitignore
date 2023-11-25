@@ -32,3 +32,6 @@ client/.env
 
 # Cypress video recordings
 cypress/videos/*
+
+# Server upload storeage
+server/uploads/*
